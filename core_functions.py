@@ -39,12 +39,6 @@ def boltz_acceptance_prob(energy, new_energy, temperature):
         return np.exp(- delta_e / temperature)
 
 
-def boltz_cooling(initial_temp, k):
-    #Boltzmann temperature decreasing.
-    if k <= 1:
-        return initial_temp
-    else:
-        return initial_temp / np.log(k)
 
 def geom_cooling(temp, alpha = 0.95):
     #geometric cooling, T(k+1)=alpha*T(k)
