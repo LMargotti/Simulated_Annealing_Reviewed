@@ -59,7 +59,7 @@ if __name__ == '__main__':
             "Rosenbrock" : []
         } 
 
-    elif args.mode == "userf"   
+    elif args.mode == "userf"  
         test_conf = {
             "chosen_function" : [chosen_function, INTERVAL]
         }

@@ -13,6 +13,7 @@ Steps:
 - write the algorithm using the guidelines from literature
 - Use a run file for code management, it would be nice to add the possibility for the user to choose parameters or functions to be minimized.
 - plots
+- test functions
 - comments/PEP8
 - Readme!
 
