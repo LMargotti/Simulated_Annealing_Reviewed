@@ -11,7 +11,7 @@ def simulated_annealing(cooling, acceptance_prob, energy, move, interval, initia
                         k_max = 1e10, tolerance_value = 1e-6, tolerance_iter = 10,
                         obj_fn_limit = -1e10, reann_tol = 100, verbose = False):
 
-"""
+    """
     The algorithm is aimed to iterate a specific procedure in order
     to reach global minima of given functions.
     
