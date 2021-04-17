@@ -1,7 +1,9 @@
 import algorithm as ag
-from core_functions import geom_cooling, boltz_acceptance_prob, boltz_move
-from test_functions import ackley_fn, rastrigin_fn, rosenbrock_fn, himmelblau_fn
+from core_functions import boltz_acceptance_prob, boltz_move, geom_cooling
 from my_function import chosen_function, INTERVAL
+from plot import plot_results_myfunction, plot_results_tests
+from test_functions import ackley_fn,  himmelblau_fn, rastrigin_fn, rosenbrock_fn
+
 
 if __name__ == '__main__':
     #parsing
@@ -97,3 +99,10 @@ if __name__ == '__main__':
     for k,v in exit_interations.items():
         print("\n")
         print("Function: {}\nStopping criterion: {}\nNumber of iterations: {}\nReanniling: {}".format(k,v[0],v[1], v[2]))
+
+    # Plots
+    if args.mode == 'test':
+        plot_results_tests(results)
+        
+    else:
+        plot_results_myfunction(results)
