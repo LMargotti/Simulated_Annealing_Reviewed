@@ -45,3 +45,28 @@ def geom_cooling(temp, alpha = 0.95):
     return temp * alpha
 
 
+#add stopping criteria 
+ 
+#average change in value of objfun < tolerance
+def tolerance(energies, tolerance, tolerance_iter) :
+    if len(energies) <= tolerance_iter :
+        return False
+    if avg_last_k_value(energies, tolerance_iter) < tolerance :
+        return True
+    else : 
+        return False
+    
+# objfun < limit
+def objective_limit(energy, limit):
+    if energy <= limit :
+        return True
+    else :
+        return False
+
+# Compute the average of the last k absolute differences between the values of a list.
+def avg_last_k_value(energies, k):
+    diff = []
+    L = len(energies)    
+    for i in range(L - 1,L - (k+1),-1):
+        diff.append(abs(energies[i]-energies[i-1]))
+    return np.mean(diff)
