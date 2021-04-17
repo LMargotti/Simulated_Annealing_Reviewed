@@ -12,6 +12,7 @@ from numpy import random as rnd
 
 
 def boltz_move(state, temp, interval):
+    
     """
     The concept of "move" is here presented: the function defines the steps, whose
     magnitude and directions are expressed as the square root of <<current>> temperature
@@ -107,7 +108,7 @@ def boltz_acceptance_prob(energy, new_energy, temperature):
 #Other cooling methods exist and can be found in references [1], [2]
 
 def geom_cooling(temp, alpha = 0.95):
-     """
+    """
     Geometric temperature decreasing procedure allows for temperature variations 
     after every iteration (k).
     It returns a value of temperature such that 
