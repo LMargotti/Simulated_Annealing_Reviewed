@@ -1,3 +1,4 @@
+import argparse
 import algorithm as ag
 from core_functions import boltz_acceptance_prob, boltz_move, geom_cooling
 from my_function import chosen_function, INTERVAL
@@ -6,7 +7,14 @@ from test_functions import ackley_fn,  himmelblau_fn, rastrigin_fn, rosenbrock_f
 
 
 if __name__ == '__main__':
-    #parsing
+
+    """
+    Command-line parsing for parameters management.
+    Full alphabetic-ordered list of available options in Readme.md
+    Every parser is dedicated to a specific variable to be modified.
+    
+    """
+    
     parser = argparse.ArgumentParser(description='Simulated Annealing Algorithm', formatter_class=argparse.RawTextHelpFormatter)
     
     parser.add_argument('-k', '--k_max', action='store', nargs='?', const=None, default=1e6, type=int,
@@ -68,6 +76,14 @@ if __name__ == '__main__':
         exit_interations = {
             "chosen_function" : []
             }
+
+    """
+    The algorithm is run according to configuration setup.
+    For cycle is dedicated to test functions only in order to
+    process them and have them plotted in the same 
+    image.
+
+    """
 
     for fn, par in test_conf.items():
         states, energies, temp, k, _exit, reann = ag.simulated_annealing(

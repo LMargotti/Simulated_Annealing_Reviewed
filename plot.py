@@ -1,11 +1,40 @@
-#with matplotlib, plot the functions and the results
 
 import matplotlib.pyplot as plt
 import numpy as np
 from test_functions import ackley_fn, himmelblau_fn, rastrigin_fn, rosenbrock_fn
 from my_function import chosen_function
 
+"""
+The following functions are identical in parameters and working principle.
+Separation is aimed to give easy access for the users to the chosen_function plot 
+code lines if they want to change settings.
+They generate specific points via for loop once a dedicated range is selected arbitrarily.
+For test functions, actual local minima are black-labelled and reported in results plots: they 
+show how far the algorithm is from exact solutions.
+"""
+
+
 def plot_results_myfunction(results):
+    """
+    Generation of selected 2-variables functions points.
+    
+    >Plot of specified function in a 3d graph via filling lists with the function values 
+     evaluated at given points in a given range.
+    >Plot of results applied to selected function with specified labels for local minima, starting point
+     and iterative states.
+    
+    Pictures saved as .png format in a dedicated folder.
+    
+    Parameters
+    ----------
+    
+    results: list
+             This is actually a list of lists of the form
+             results[function]=[[state],[energy],[temperature]] 
+             where state=(x,y); energy is a function of (x,y) and temperature is the
+             temperature at which the scalar of energy is evaluated.
+    
+    """
    #Generate chosen function points
     function={"chosen_function":[[],[],[]]}
     
@@ -60,8 +89,27 @@ def plot_results_myfunction(results):
 
 
 def plot_results_tests(results):
+    """
+    Generation of selected 2-variables functions points.
+    
+    >Plot of specified function in a 3d graph via filling lists with the function values 
+     evaluated at given points in a given range.
+    >Plot of results applied to selected function with specified labels for local minima, starting point
+     and iterative states.
+    
+    Pictures saved as .png format in a dedicated folder.
+    
+    Parameters
+    ----------
+    results: list
+             This is actually a list of lists of the form
+             results[function]=[[state],[energy],[temperature]] 
+             where state=(x,y); energy is a function of (x,y) and temperature is the
+             temperature at which the scalar of energy is evaluated.
+    
+    """
+    
      #--------Test functions plots---------#
-
     #Generate functions points
     functions = {
                 "Ackley" : [[],[],[]],
