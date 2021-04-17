@@ -50,3 +50,67 @@ def simulated_annealing(cooling, acceptance_prob, energy, move, interval, initia
                 print(dash)
             break           
         
+        #Step 2: move or generaton of new solution.
+        new_s = move(s, T, interval)
+        energy_s = energy(s)
+        energy_new_s = energy(new_s)
+        states.append(s)
+        energies.append(energy_s)
+        temperatures.append(T)
+        
+        #Step 3: application of Geometric cooling method.
+        T = cooling(T)
+        
+        #Stopping criteria for algorithm interruption and results presentation.
+        
+        #Temperature limit 
+        if T <= 0. :
+            if verbose :
+                print(dash)
+                print("TEMPERATURE EXIT")
+                print(dash)
+            _exit = 3
+            break   
+        
+       #Eneregy tolerance method, based on the average difference in energy
+       #computed for N iterations.
+        if tolerance(energies, tolerance_value, tolerance_iter) :
+            if verbose :
+                print(dash)
+                print("TOLERANCE EXIT")
+                print(dash)
+            _exit = 1
+            break    
+        
+        #minimum value of free energy is reached.
+        if objective_limit(energy_s, obj_fn_limit) :
+            if verbose :
+                print(dash)
+                print("OBJECTIVE FUNCTION LIMIT EXIT")
+                print(dash)
+            _exit = 2
+            break
+        
+        #Reanniling Process if better solutions have been found along the way.
+        best_e = min(energies)
+        best_s = states[np.argmin(energies)]
+        
+        if energy_s > best_e + reann_tol :
+            if verbose :
+                print(dash)
+                print("REANNILING")
+                print(dash)
+            energies = []
+            states = []
+            s = best_s
+            energy_s = best_e
+            T = initial_temp
+            k = 0
+            reann = True
+            continue
+        
+        #Step 4: acceptance or rejection through comparison with acceptance probability.
+        if acceptance_prob(energy_s, energy_new_s, T) >= rnd.random() :
+            s = new_s
+    
+    return states, energies, temperatures, k, exit_types[_exit], reann
