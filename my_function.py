@@ -1,5 +1,5 @@
 #insert user function
-#import numpy as np
+import numpy as np
 INTERVAL=[-6,6]
 def chosen_function(X):
     """
@@ -20,6 +20,9 @@ def chosen_function(X):
     a=x**2+y**2
 
     #test function for correctness of implemented value.
+    """
+    Reason is the algorithm generates different solution types (float/np.float64)
+    """
     if type(a) == float:
         
         return(a)

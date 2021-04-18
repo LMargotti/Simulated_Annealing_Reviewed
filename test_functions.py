@@ -35,7 +35,9 @@ def himmelblau_fn (X):
     """
     x = X[0]
     y = X[1]
-    return np.square(x**2 + y - 11) + np.square(x + y**2 - 7)
+    b = np.square(x**2 + y - 11) + np.square(x + y**2 - 7)
+    assert type(b) == np.float64
+    return b
 
     
 
@@ -47,7 +49,9 @@ def rastrigin_fn (X):
     """
     x = X[0]
     y = X[1]
-    return 20 + x**2 + y**2 - 10 * (np.cos(2 * np.pi * x) + np.cos(2 * np.pi * y))
+    c = 20 + x**2 + y**2 - 10 * (np.cos(2 * np.pi * x) + np.cos(2 * np.pi * y))
+    assert type(c) == np.float64
+    return c
 
 
 
@@ -59,4 +63,6 @@ def rosenbrock_fn (X):
     """
     x = X[0]
     y = X[1]
-    return np.square(1 - x) + 100 * np.square(y - x**2)
+    d = np.square(1 - x) + 100 * np.square(y - x**2)
+    assert type(d) == np.float64
+    return d
