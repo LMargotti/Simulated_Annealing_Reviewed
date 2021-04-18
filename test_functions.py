@@ -20,7 +20,9 @@ def ackley_fn (X):
     x = X[0]
     y = X[1]
     exp1 = np.exp(-0.2 * np.sqrt(0.5 * (x**2 + y**2)))
-    exp2 = np.exp(0.5 * (np.cos(2 * np.pi * x) + np.cos(2 * np.pi * y)))      
+    exp2 = np.exp(0.5 * (np.cos(2 * np.pi * x) + np.cos(2 * np.pi * y))) 
+    assert type(exp1) == np.float64
+    assert type(exp2) == np.float64     
     return -20 * exp1 - exp2 + np.e + 20
 
 

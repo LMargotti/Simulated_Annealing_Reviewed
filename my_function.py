@@ -17,6 +17,13 @@ def chosen_function(X):
     
     #Insert your function of interest here, remember to change INTERVAL values if needed.#
     #for example
-    return(x**2+y**2)
+    a=x**2+y**2
 
+    #test function for correctness of implemented value.
+    if type(a) == float:
+        
+        return(a)
+    else:
+        assert type(a) == np.float64
+        return(a)
     #pass

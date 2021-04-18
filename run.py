@@ -43,6 +43,19 @@ if __name__ == '__main__':
         
     args = parser.parse_args()
     
+    #parser test functions attempt
+    #    for a in parser:
+#        assert type(args.a) == type(parser.add)
+#    assert type(args.k_max) == int, 'Wrong type'
+#    assert type(args.mode) == str, 'Wrong type'
+#    assert type(args.obj_fn_limit) == float, 'Wrong type'
+#    assert type(args.reann) == float, 'Wrong type'
+#    assert type(args.init_temp) == float, 'Wrong type'
+#    assert type(args.tolerance_iter) == int, 'Wrong type'
+#    assert type(args.tolerance_value) == float, 'Wrong type'
+#    assert type(args.verbose) == bool, 'Wrong type'
+
+
 
 # Configuration mode: test functions are used for no "-m" command request.
 
