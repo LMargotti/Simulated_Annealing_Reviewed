@@ -36,7 +36,7 @@ The entire program is aimed to work in two different ways: it can operate in *de
   - >`-tv` as `Float` -> Tolerance Energy value for stopping criterion [default: 1e-6]     
   
   
-
+*Note: incorrect insertion, e.g. negative temperature or non `float` returned function values, will lead to assertion errors.*
 
 ## Basics 
 Simulated annealing (SA somewhere hereinafter) is a popular local search meta-heuristic used to address discrete
