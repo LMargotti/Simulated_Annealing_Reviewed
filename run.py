@@ -119,9 +119,11 @@ if __name__ == '__main__':
     
     
     # Results: output shows specific function, stopping criterion, number of iterations and if reannealing occurred + last point to be tested
-    for k,v in exit_interations.items():
+    for (k,v), (kk,vv) in zip(exit_interations.items(), results.items()):
+        last_point = vv[0]
         print("\n")
-        print("Function: {}\nStopping criterion: {}\nNumber of iterations: {}\nReanniling: {}".format(k,v[0],v[1], v[2]))
+        print("Function: {}\nStopping criterion: {}\nNumber of iterations: {}\nLast visited point: {}\nReanniling: {}".format(k,v[0],v[1], last_point[-1], v[2]))
+
 
     # Plots
     if args.mode == 'test':
