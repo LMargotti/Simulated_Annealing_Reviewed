@@ -33,10 +33,16 @@ The entire program is aimed to work in two different ways: it can operate in *de
   - >`-v` as `bool` -> Verbose parameter, [default: False]
   - >`-t` as `Float` -> Initial temperature. [default: 100]
   - >`-ti` as `int` -> Number of iterations taken into account in Tolerance Energy. [default: 1000]
-  - >`-tv` as `Float` -> Tolerance Energy value for stopping criterion [default: 1e-6]     
+  - >`-tv` as `Float` -> Tolerance Energy value for stopping criterion [default: 1e-10]     
   
   
 *Note: incorrect insertion, e.g. negative temperature or non `float` returned function values, will lead to assertion errors.*
+
+- In order to have the algorithm tested in terms of results validity, on *Prompt command* digit
+    > python unittest.py
+
+The system being stochastic implies test accurancy can't be 100% actually. Through central limit theorem and tries, the acceptability value for the minima to be registered as **correct** was set to be *delta == 1.2*
+
 
 ## Basics 
 Simulated annealing (SA somewhere hereinafter) is a popular local search meta-heuristic used to address discrete

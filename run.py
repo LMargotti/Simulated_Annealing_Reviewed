@@ -35,7 +35,7 @@ if __name__ == '__main__':
     parser.add_argument('-ti', '--tolerance_iter', action='store', nargs='?', const=None, default=1000, type=int,
                         choices=None, help='Number of iterations taken into account in Tolerance Energy. [default: 1000]', metavar=None)
     
-    parser.add_argument('-tv', '--tolerance_value', action='store', nargs='?', const=None, default=1e-6, type=float,
+    parser.add_argument('-tv', '--tolerance_value', action='store', nargs='?', const=None, default=1e-10, type=float,
                         choices=None, help='Tolerance Energy value for stopping criterion [default: 1e-6]', metavar=None)
             
     parser.add_argument('-v', '--verbose', action='store', nargs='?', const=None, default=False, type=bool,
@@ -118,7 +118,7 @@ if __name__ == '__main__':
         exit_interations[fn].append(reann)
     
     
-    # Results: output shows specific function, stopping criterion, number of iterations and if reannealing occurred.
+    # Results: output shows specific function, stopping criterion, number of iterations and if reannealing occurred + last point to be tested
     for k,v in exit_interations.items():
         print("\n")
         print("Function: {}\nStopping criterion: {}\nNumber of iterations: {}\nReanniling: {}".format(k,v[0],v[1], v[2]))
