@@ -16,6 +16,7 @@ Libraries to be used:
 - [numpy](https://numpy.org/install/) 
 - [mathplotlib](https://matplotlib.org/stable/users/installing.html)
 - [argparse](https://docs.python.org/3/library/argparse.html)
+- [unittest](https://anaconda.org/anaconda/unittest2)
 
 ### How to 
 The entire program is aimed to work in two different ways: it can operate in *demo* mode acting on four specific test functions or it can be applied on a specific user function either, to be written in a dedicated user-friendly *file.py*, already implemented with a default parabolic 2-D function. Also, all the parameters involved in the algorithm can be modified by the user itself via parsing.
