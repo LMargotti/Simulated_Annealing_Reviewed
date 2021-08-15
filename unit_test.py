@@ -1,42 +1,52 @@
 import unittest
 import numpy as np
+from numpy import random as rnd
 
-import algorithm as ag
-from core_functions import boltz_acceptance_prob, boltz_move, geom_cooling
-from plot import plot_results_myfunction, plot_results_tests
-from test_functions import ackley_fn,  himmelblau_fn, rastrigin_fn, rosenbrock_fn
+from core_functions import avg_last_k_value, boltz_acceptance_prob, boltz_move, geom_cooling, objective_limit, tolerance
 
+"""
 
+Unit test correction: you need a complete test to be operated on the whole algorithm
+that allows the user not to be lost while finding errors or bugs.
+
+Idea: I'll create a class (?) and implement testing methods in order for my core functions
+and algorithm to be controlled from scratch with a simple mathematical 2-D function (a paraboloid?).
+
+"""
 class TestSA_alg(unittest.TestCase):
+    def energy(self, x):
 
-    def test_minimum(self):
-        states, energies, temp, k, _exit, reann = ag.simulated_annealing(
-                                                cooling = geom_cooling,
-                                                acceptance_prob = boltz_acceptance_prob,
-                                                energy = ackley_fn,
-                                                move = boltz_move,
-                                                tolerance_value = 1e-10,
-                                                initial_temp = 100,
-                                                interval = (-6, 6)
-                                                )
-        # Found minimum
-        x = np.abs(round(states[-1][0],2))
-        y = np.abs(round(states[-1][1],2)) 
-        # True minimum
-        x0 = 0. 
-        y0 = 0.
-        # Delta
-        delta = 1.2
+        self.assertEqual(len(x), 2) # Checking for input dimensionality
 
-        # 
-        cond1 = (x0 <= x + delta) and (x0 >= x - delta)
-        cond2 = (y0 <= y + delta) and (y0 >= y - delta)
+        return x[0]**2+x[1]**2
+    
+    def tolerance(self, energies, tolerance, tolerance_iter) :
+        """
+        The algorithm runs until the average change in value of the objective function 
+        is less than the tolerance.
+        """
+        
+        if len(energies) <= tolerance_iter :
+            return False
 
-        print(x, y)
+        avg_last_k = avg_last_k_value(energies, tolerance_iter)
 
-        self.assertTrue(cond1)
-        self.assertTrue(cond2)
+        #how can I test it?
+
+#Algorithm here
 
 
-if __name__ == '__main__':
-    unittest.main()
+
+"""
+Notes while coding:
+
+I'll need to import libraries and files. 
+>I'll have a new(!!!) function here, so no need for the algorithm to be imported
+>core functions needed tho
+
+Write functions to be tested. For example, define an energy of the form 
+x^2+y^2 and test whether if the given array is of dimension = 2
+
+I can test also the correctness of the minimum, the validity of the expected "move" i.e. (prob in [0,1])
+and the input values consistency (i.e. T>0)
+"""
