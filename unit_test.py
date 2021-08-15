@@ -24,10 +24,9 @@ class TestSA_alg(unittest.TestCase):
 
         avg_last_k = avg_last_k_value(energies, tolerance_iter)
 
-        #tests on the avg(?) not working, need further work
-        #print(energies)
-        #self.assertLessEqual(avg_last_k, max(energies))
-        #self.assertGreaterEqual(avg_last_k, min(energies))
+        # Tests on the avg
+        # Print(energies) to be added if needed
+        self.assertGreaterEqual(avg_last_k, 0)
 
         if avg_last_k < tolerance :
             return True
@@ -87,7 +86,7 @@ class TestSA_alg(unittest.TestCase):
         self.assertGreater(reann_tol, 0), "Insert positive values"
         self.assertGreater(tolerance_iter, 0), "Insert positive values"
         self.assertGreater(k_max, 0), "Insert positive values"
-
+        
         # Step 1: generation of random starting point.
         states = []
         energies = []
@@ -224,15 +223,13 @@ class TestSA_alg(unittest.TestCase):
                                                 verbose = True
                                                 )
     # Check the minimum, rounding the obtained float to the lower integer (abs--->negative-to-positive conversion)
-        self.assertAlmostEqual(np.floor(abs(states[-1][0])), 0.)
-        self.assertAlmostEqual(np.floor(abs(states[-1][1])), 0.)
+        delta_err = 1 #arbitrarily chosen error 
         print("Minimum:", states[-1])
-    
+        self.assertAlmostEqual(np.floor(abs(abs(states[-1][0])-delta_err)), 0.), "The found minimum is far from what expected"
+        self.assertAlmostEqual(np.floor(abs(abs(states[-1][1])-delta_err)), 0.), "The found minimum is far from what expected"
+        
 
 if __name__ == '__main__':
 
     unittest.main()
 
-"""
-Ok great: now check if it works and then try to fix the avg test
-"""
