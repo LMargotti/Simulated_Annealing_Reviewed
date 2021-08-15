@@ -94,7 +94,46 @@ class TestSA_alg(unittest.TestCase):
         self.assertGreater(tolerance_iter, 0), "Insert positive values"
         self.assertGreater(k_max, 0), "Insert positive values"
 
+        # Step 1: generation of random starting point.
+        states = []
+        energies = []
+        temperatures = []
+        s = (rnd.uniform(interval[0], interval[1]), rnd.uniform(interval[0], interval[1]))
 
+        k = 0
+        T = initial_temp
+        reann = False
+        exit_types = {
+            0 : 'Max Iter',
+            1 : 'Tolerance',
+            2 : 'Obj Limit',
+            3 : 'Temp Limit'
+            }
+        _exit = 0
+        
+        if verbose:
+            dash = '-' * 70
+            print("\n")
+            print ('{:_^70}'.format('Simulated Annealing'))
+            print("Initial state: {}".format(s))
+            print("\n")
+        
+        
+        while True:
+            #it generates <infinte> iterations to be stopped two lines below if certain
+            #conditions are met.
+            k += 1
+            
+            #Stopping criterion in case of max n.o. iterations is reached.
+            if k == k_max :
+                if verbose :
+                    print(dash)
+                    print("MAX ITERATION EXIT")
+                    print(dash)
+                break    
+
+            
+                   
 """
 Notes while coding:
 
@@ -107,4 +146,7 @@ x^2+y^2 and test whether if the given array is of dimension = 2
 
 I can test also the correctness of the minimum, the validity of the expected "move" i.e. (prob in [0,1])
 and the input values consistency (i.e. T>0)
+
+Insert the algorithm steps now
+Remember the SELF!!!
 """
