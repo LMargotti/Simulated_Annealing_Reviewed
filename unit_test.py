@@ -132,8 +132,89 @@ class TestSA_alg(unittest.TestCase):
                     print(dash)
                 break    
 
+
+            #Step 2: move or generaton of new solution.
+            new_s = move(s, T, interval)
+
+            self.assertLessEqual(new_s[0], interval[1])
+            self.assertLessEqual(new_s[1], interval[1])
+            self.assertGreaterEqual(new_s[0], interval[0])
+            self.assertGreaterEqual(new_s[1], interval[0])
+
+            energy_s = self.energy(s)
+            energy_new_s = self.energy(new_s)
+
+            # Check if the energy function returned value for s and new_s is consistent with our paraboloid 
+            self.assertEqual(energy_s, s[0]**2+s[1]**2)
+            self.assertEqual(energy_new_s, new_s[0]**2+new_s[1]**2)
+
+            states.append(s)
+            energies.append(energy_s)
+            temperatures.append(T)
             
-                   
+            #Step 3: application of Geometric cooling method.
+            T = cooling(T)
+            
+            #Stopping criteria for algorithm interruption and results presentation.
+            
+            #Temperature limit 
+            if T <= 0. :
+                if verbose :
+                    print(dash)
+                    print("TEMPERATURE EXIT")
+                    print(dash)
+                _exit = 3
+                break   
+            
+           #Enregy tolerance method, based on the average difference in energy
+           #computed for N iterations.
+            elif self.tolerance(energies, tolerance_value, tolerance_iter) :
+                if verbose :
+                    print(dash)
+                    print("TOLERANCE EXIT")
+                    print(dash)
+                _exit = 1
+                break    
+            
+            #minimum value of free energy is reached.
+            elif objective_limit(energy_s, obj_fn_limit) :
+                if verbose :
+                    print(dash)
+                    print("OBJECTIVE FUNCTION LIMIT EXIT")
+                    print(dash)
+                _exit = 2
+                break
+            
+            #Reanniling Process if better solutions have been found along the way.
+            best_e = min(energies)
+            best_s = states[np.argmin(energies)]
+            
+            if energy_s > best_e + reann_tol :
+                if verbose :
+                    print(dash)
+                    print("REANNILING")
+                    print(dash)
+                energies = []
+                states = []
+                s = best_s
+                energy_s = best_e
+                T = initial_temp
+                k = 0
+                reann = True
+                continue
+            
+            #Step 4: acceptance or rejection through comparison with acceptance probability.
+            acc_prob = acceptance_prob(energy_s, energy_new_s, T)
+
+
+            # Check if the returned value is comprised between 0+ and 1
+            self.assertLessEqual(acc_prob,1.)
+            self.assertGreater(acc_prob,0.)
+
+            if acc_prob >= rnd.random() :
+                s = new_s
+        
+        return states, energies, temperatures, k, exit_types[_exit], reann       
 """
 Notes while coding:
 
@@ -149,4 +230,21 @@ and the input values consistency (i.e. T>0)
 
 Insert the algorithm steps now
 Remember the SELF!!!
+
+Complete step 2,3,4 with consistency and validity tests 
+
+Add a rough minimum check at the end
 """
+    def test_minimum(self):
+        states, energies, temp, k, _exit, reann = self.simulated_annealing(
+                                                cooling = geom_cooling,
+                                                acceptance_prob = boltz_acceptance_prob,
+                                                move = boltz_move,
+                                                tolerance_value = 1e-10,
+                                                initial_temp = 100,
+                                                interval = (-6, 6),
+                                                verbose = True
+                                                )
+    #like here you should check if the minimum is the actual minimum.
+    # how?    
+        
