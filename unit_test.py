@@ -31,9 +31,14 @@ class TestSA_alg(unittest.TestCase):
 
         avg_last_k = avg_last_k_value(energies, tolerance_iter)
 
-        #how can I test it?
+        #tests on the avg(?)
+        self.assertLessEqual(avg_last_k, max(energies))
+        self.assertGreaterEqual(avg_last_k, min(energies))
 
-#Algorithm here
+        if avg_last_k < tolerance :
+            return True
+        else : 
+            return False
 
 
 
