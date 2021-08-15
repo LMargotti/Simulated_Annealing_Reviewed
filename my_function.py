@@ -6,10 +6,9 @@ def chosen_function(X):
     It creates chosen_function of X = (x,y).
     
     User function is computed following usual mathematical approaches, remember
-    to include dedicated libraries if needed and to set different interval eventually if needed.
+    to include dedicated libraries if needed and to set different interval eventually.
  
     Requirements for readability: real, 2-variable non pathological function.
-    
     
     """
     x=X[0]
