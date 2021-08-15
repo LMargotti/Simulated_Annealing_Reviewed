@@ -4,19 +4,12 @@ from numpy import random as rnd
 
 from core_functions import avg_last_k_value, boltz_acceptance_prob, boltz_move, geom_cooling, objective_limit, tolerance
 
-"""
 
-Unit test correction: you need a complete test to be operated on the whole algorithm
-that allows the user not to be lost while finding errors or bugs.
-
-Idea: I'll create a class (?) and implement testing methods in order for my core functions
-and algorithm to be controlled from scratch with a simple mathematical 2-D function (a paraboloid?).
-
-"""
 class TestSA_alg(unittest.TestCase):
     def energy(self, x):
 
-        self.assertEqual(len(x), 2) # Checking for input dimensionality
+        # Checking for input dimensionality
+        self.assertEqual(len(x), 2) 
 
         return x[0]**2+x[1]**2
     
@@ -41,14 +34,15 @@ class TestSA_alg(unittest.TestCase):
         else : 
             return False
     
-    #ALGORITHM
+    # ALGORITHM
 
     def simulated_annealing(self, cooling, acceptance_prob, move, interval, initial_temp = 100., 
                         k_max = 1e10, tolerance_value = 1e-6, tolerance_iter = 10,
                         obj_fn_limit = -1e10, reann_tol = 100, verbose = False):
 
         """
-        
+        [see algorithm.py]
+
         Parameters
         ----------
         cooling: function
@@ -120,11 +114,11 @@ class TestSA_alg(unittest.TestCase):
         
         
         while True:
-            #it generates <infinte> iterations to be stopped two lines below if certain
-            #conditions are met.
+            # It generates <infinte> iterations to be stopped two lines below if certain
+            # conditions are met.
             k += 1
             
-            #Stopping criterion in case of max n.o. iterations is reached.
+            # Stopping criterion in case of max n.o. iterations is reached.
             if k == k_max :
                 if verbose :
                     print(dash)
@@ -133,7 +127,7 @@ class TestSA_alg(unittest.TestCase):
                 break    
 
 
-            #Step 2: move or generaton of new solution.
+            # Step 2: move or generaton of new solution.
             new_s = move(s, T, interval)
 
             self.assertLessEqual(new_s[0], interval[1])
@@ -152,12 +146,12 @@ class TestSA_alg(unittest.TestCase):
             energies.append(energy_s)
             temperatures.append(T)
             
-            #Step 3: application of Geometric cooling method.
+            # Step 3: application of Geometric cooling method.
             T = cooling(T)
             
-            #Stopping criteria for algorithm interruption and results presentation.
+            # Stopping criteria for algorithm interruption and results presentation.
             
-            #Temperature limit 
+            # Temperature limit 
             if T <= 0. :
                 if verbose :
                     print(dash)
@@ -166,8 +160,8 @@ class TestSA_alg(unittest.TestCase):
                 _exit = 3
                 break   
             
-           #Enregy tolerance method, based on the average difference in energy
-           #computed for N iterations.
+           # Enregy tolerance method, based on the average difference in energy
+           # computed for N iterations.
             elif self.tolerance(energies, tolerance_value, tolerance_iter) :
                 if verbose :
                     print(dash)
@@ -176,7 +170,7 @@ class TestSA_alg(unittest.TestCase):
                 _exit = 1
                 break    
             
-            #minimum value of free energy is reached.
+            # Minimum value of free energy is reached.
             elif objective_limit(energy_s, obj_fn_limit) :
                 if verbose :
                     print(dash)
@@ -185,7 +179,7 @@ class TestSA_alg(unittest.TestCase):
                 _exit = 2
                 break
             
-            #Reanniling Process if better solutions have been found along the way.
+            # Reanniling Process if better solutions have been found along the way.
             best_e = min(energies)
             best_s = states[np.argmin(energies)]
             
@@ -203,7 +197,7 @@ class TestSA_alg(unittest.TestCase):
                 reann = True
                 continue
             
-            #Step 4: acceptance or rejection through comparison with acceptance probability.
+            # Step 4: acceptance or rejection through comparison with acceptance probability.
             acc_prob = acceptance_prob(energy_s, energy_new_s, T)
 
 
@@ -215,26 +209,10 @@ class TestSA_alg(unittest.TestCase):
                 s = new_s
         
         return states, energies, temperatures, k, exit_types[_exit], reann       
-"""
-Notes while coding:
 
-I'll need to import libraries and files. 
->I'll have a new(!!!) function here, so no need for the algorithm to be imported
->core functions needed tho
 
-Write functions to be tested. For example, define an energy of the form 
-x^2+y^2 and test whether if the given array is of dimension = 2
 
-I can test also the correctness of the minimum, the validity of the expected "move" i.e. (prob in [0,1])
-and the input values consistency (i.e. T>0)
 
-Insert the algorithm steps now
-Remember the SELF!!!
-
-Complete step 2,3,4 with consistency and validity tests 
-
-Add a rough minimum check at the end
-"""
     def test_minimum(self):
         states, energies, temp, k, _exit, reann = self.simulated_annealing(
                                                 cooling = geom_cooling,
@@ -245,6 +223,16 @@ Add a rough minimum check at the end
                                                 interval = (-6, 6),
                                                 verbose = True
                                                 )
-    #like here you should check if the minimum is the actual minimum.
-    # how?    
-        
+    # Check the minimum
+        self.assertAlmostEqual(np.floor(abs(states[-1][0])), 0.)
+        self.assertAlmostEqual(np.floor(abs(states[-1][1])), 0.)
+        print("Minimum:", states[-1])
+    
+
+if __name__ == '__main__':
+
+    unittest.main()
+
+"""
+Ok great: now check if it works and then try to fix the avg test
+"""
