@@ -223,7 +223,7 @@ class TestSA_alg(unittest.TestCase):
                                                 interval = (-6, 6),
                                                 verbose = True
                                                 )
-    # Check the minimum
+    # Check the minimum, rounding the obtained float to the lower integer (abs--->negative-to-positive conversion)
         self.assertAlmostEqual(np.floor(abs(states[-1][0])), 0.)
         self.assertAlmostEqual(np.floor(abs(states[-1][1])), 0.)
         print("Minimum:", states[-1])
