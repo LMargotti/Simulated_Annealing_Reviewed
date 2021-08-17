@@ -39,10 +39,14 @@ The entire program is aimed to work in two different ways: it can operate in *de
   
 *Note: incorrect insertion, e.g. negative temperature or non `float` returned function values, will lead to assertion errors.*
 
-- In order to have the algorithm tested in terms of results validity, on *Prompt command* digit
+
+### Testing
+The repository includes a *unit_test.py* file that allows for the user to have a clear and optimized view of the algorithm and the core functions. It actually perform different tests on a very simple 2-D *energy* function of the form ***f(x)=x^2+y^2*** of which we know the behaviour and the exact minimum. This way it is possible to check whether if the algorithm works properly and the deterministic core functions are correct. Also, stochastic generations are controlled via *assertLessEqual/assertGreaterEqual* commands, in order for anything to result out of declared ranges.
+
+To have the algorithm tested in terms of results validity, on *Prompt command* digit:
     > python unittest.py
 
-The system being stochastic implies test accurancy can't be 100% actually. Through central limit theorem and tries, the acceptability value for the minima to be registered as **correct** was set to be *delta == 1.2*
+The system being stochastic implies test accurancy can't be 100% actually. Through central limit theorem and tries, the acceptability value for the minima to be registered as **correct** was set to be *delta == 1*
 
 
 ## Basics 
