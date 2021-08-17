@@ -4,11 +4,19 @@ from numpy import random as rnd
 
 from core_functions import avg_last_k_value, boltz_acceptance_prob, boltz_move, geom_cooling, objective_limit, tolerance
 
+"""
+This file is intended to act as a test for the implemented algorithm and the core functions. 
+Tests are performed according to _unittest_ library documentation.
 
+The following introduces a check on the proposed functions via analysis of an arbitrarily chosen well known 2-D function,
+in order for its behaviour to be easily controlled from scratch. 
+
+Energy function the tests are performed on: f(x)=x^2+y^2.
+"""
 class TestSA_alg(unittest.TestCase):
     def energy(self, x):
 
-        # Checking for input dimensionality
+        # Checking for input dimensionality: the system ensures the input is a 2-D function
         self.assertEqual(len(x), 2) 
 
         return x[0]**2+x[1]**2
@@ -24,7 +32,9 @@ class TestSA_alg(unittest.TestCase):
 
         avg_last_k = avg_last_k_value(energies, tolerance_iter)
 
-        # Tests on the avg
+        # Tests on the avg: we need the average of the last values of energies list to be greater than 0, otherwise 
+        # errors occurred in the evaluation of the mean
+
         # Print(energies) to be added if needed
         self.assertGreaterEqual(avg_last_k, 0)
 
@@ -81,7 +91,7 @@ class TestSA_alg(unittest.TestCase):
         """
 
 
-        # Input values check
+        # Input values check: ensures the user does not type undesired values.
         self.assertGreater(initial_temp,0), "Initial temperature needs to be a positive float"
         self.assertGreater(reann_tol, 0), "Insert positive values"
         self.assertGreater(tolerance_iter, 0), "Insert positive values"
@@ -129,6 +139,7 @@ class TestSA_alg(unittest.TestCase):
             # Step 2: move or generaton of new solution.
             new_s = move(s, T, interval)
 
+            # Testing on the validity of the proposed solution and the clip method: it needs to lay in the selected interval.
             self.assertLessEqual(new_s[0], interval[1])
             self.assertLessEqual(new_s[1], interval[1])
             self.assertGreaterEqual(new_s[0], interval[0])
