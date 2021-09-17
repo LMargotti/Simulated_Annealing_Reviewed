@@ -22,7 +22,7 @@ Libraries to be used:
 The entire program is aimed to work in two different ways: it can operate in *demo* mode acting on four specific test functions or it can be applied on a specific user function either, to be written in a dedicated user-friendly *file.py*, already implemented with a default parabolic 2-D function. Also, all the parameters involved in the algorithm can be modified by the user itself via parsing.
 
 - Clone the repository
-- OPTIONAL: open [my_function.py](my_function.py), comment out the default function and write the new one to be passed
+- OPTIONAL: open [user_function.py](user_function.py), comment out the default function and write the new one to be passed
 - On *Prompt command* digit:
   > python run.py 
   
