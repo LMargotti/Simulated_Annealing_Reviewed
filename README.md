@@ -41,7 +41,7 @@ The entire program is aimed to work in two different ways: it can operate in *de
 
 
 ### Testing
-The repository includes a *unit_test.py* file that allows for the user to have a clear and optimized view of the algorithm and the core functions. It actually perform different tests on a very simple 2-D *energy* function of the form ***f(x)=x^2+y^2*** of which we know the behaviour and the exact minimum. This way it is possible to check whether if the algorithm works properly and the deterministic core functions are correct. Also, stochastic generations are controlled via *assertLessEqual/assertGreaterEqual* commands, in order for anything to result out of declared ranges.
+The repository includes a *unit_test.py* file that allows for the user to have a clear and optimized view of the algorithm and the core functions. It actually performs different tests on a very simple 2-D *energy* function of the form ***f(x)=x^2+y^2*** of which we know the behaviour and the exact minimum. This way it is possible to check whether if the algorithm works properly and the deterministic core functions are correct. Also, stochastic generations are controlled via *assertLessEqual/assertGreaterEqual* commands, in order for anything to result out of declared ranges.
 
 To have the algorithm tested in terms of results validity, on *Prompt command* digit:
     > python unit_test.py
