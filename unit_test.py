@@ -55,13 +55,41 @@ class TestSA_alg(unittest.TestCase):
         self.assertEqual(e, s[0]**2+s[1]**2)
 
 
-    
-    def energy(self, x):
+    # Testing the cooling method: for a given temperature, the application of cooling
+    # implies a _lower_ temperature. Moreover, geom_cooling works multiplying T by a constant: this needs also to be tested.
+    def test_cooling(self):
 
-        # Checking for input dimensionality: the system ensures the input is a 2-D function
-        self.assertEqual(len(x), 2) 
+        temp_0 = 100.
+        temp_1 = geom_cooling(temp_0, self.alpha)
 
-        return x[0]**2+x[1]**2
+        self.assertLess(temp_1, temp_0) 
+
+        self.assertEqual(temp_1, temp_0 * self.alpha)
+
+    # Testing the acceptance probability function: it needs to output a value between 0 and 1. 
+    # Also, its definition implies that for two identical energies it returns 1.
+
+    def test_acceptance_prob(self):
+        """
+        Testing the acceptance probability function function.
+        """ 
+
+        e1 = rnd.random()
+        e2 = rnd.random()
+        acc_prob = boltz_acceptance_prob(e1, e2, self.initial_temp)
+
+
+        # Check if the returned value is comprised between 0 and 1
+        self.assertLessEqual(acc_prob,1.)
+        self.assertGreaterEqual(acc_prob,0.)
+
+        # For equal energies the aceptance probability is 1
+        e1 = rnd.random()
+        e2 = e1
+        acc_prob = boltz_acceptance_prob(e1, e2, self.initial_temp)
+
+        self.assertEqual(acc_prob, 1.)
+        
     
     def tolerance(self, energies, tolerance, tolerance_iter) :
         """
