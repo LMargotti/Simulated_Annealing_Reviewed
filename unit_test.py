@@ -28,7 +28,34 @@ class TestSA_alg(unittest.TestCase):
         self.assertGreaterEqual(s[0], self.interval[0])
         self.assertGreaterEqual(s[1], self.interval[0])
 
+    
+    # Testing the Boltzmann move function
+    def test_move(self):
 
+        s = (rnd.uniform(self.interval[0], self.interval[1]), rnd.uniform(self.interval[0], self.interval[1])) # initial state
+        new_s = boltz_move(s, self.initial_temp, self.interval) 
+
+        # The new state is in the given interval
+        self.assertLessEqual(new_s[0], self.interval[1])
+        self.assertLessEqual(new_s[1], self.interval[1])
+        self.assertGreaterEqual(new_s[0], self.interval[0])
+        self.assertGreaterEqual(new_s[1], self.interval[0])
+
+    
+    # Testing the validity of the implementation of energy:
+    # we fix a random seed and compare the results of the generation with
+    # a given function (2-D function: chosen_function)
+
+    def test_energy(self):
+
+        # The values of energy for fixed seed need to be equal to the ones superimposed for a 2D function
+        s = (rnd.uniform(self.interval[0], self.interval[1]), rnd.uniform(self.interval[0], self.interval[1])) # initial state
+        e = chosen_function(s)
+        
+        self.assertEqual(e, s[0]**2+s[1]**2)
+
+
+    
     def energy(self, x):
 
         # Checking for input dimensionality: the system ensures the input is a 2-D function
