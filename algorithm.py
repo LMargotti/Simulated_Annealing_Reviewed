@@ -5,6 +5,13 @@ import numpy as np
 from numpy import random as rnd
 from core_functions import tolerance, objective_limit
 
+def initialization(initial_temp, interval):
+
+    s = (rnd.uniform(interval[0], interval[1]), rnd.uniform(interval[0], interval[1]))
+    T = initial_temp
+
+    return  s, T
+
 #this is the function with the interested parameters found in literature
 
 def simulated_annealing(cooling, acceptance_prob, energy, move, interval, initial_temp = 100., 
@@ -75,21 +82,24 @@ def simulated_annealing(cooling, acceptance_prob, energy, move, interval, initia
     
     """
 
-     #Step 1: generation of random starting point.
+    #Step 1: generation of random starting point.
     states = []
     energies = []
     temperatures = []
-    s = (rnd.uniform(interval[0], interval[1]), rnd.uniform(interval[0], interval[1]))
-    k = 0
-    T = initial_temp
-    reann = False
+   
     exit_types = {
         0 : 'Max Iter',
         1 : 'Tolerance',
         2 : 'Obj Limit',
         3 : 'Temp Limit'
         }
+    k = 0
+    reann = False
     _exit = 0
+    
+    # Step 1: initialization of initial state and temperature.
+
+    s, T = initialization(initial_temp, interval)
     
     if verbose:
         dash = '-' * 70
