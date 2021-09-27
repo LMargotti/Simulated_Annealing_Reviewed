@@ -14,8 +14,7 @@ class TestSA_alg(unittest.TestCase):
     Tests are performed according to _unittest_ library documentation.
     
     A random seed is fixed for reproducibility.
-    
-    List of tests:
+
     """
     
    
