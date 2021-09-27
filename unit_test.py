@@ -91,7 +91,7 @@ class TestSA_alg(unittest.TestCase):
         self.assertEqual(acc_prob, 1.)
 
     
-    # Testing the tolerance criterion
+    # Testing the tolerance criterion. Two scenarios are pictured depending on the definition of the tolerance iter.
 
     def test_tolerance_criterion(self) :
     
@@ -103,7 +103,7 @@ class TestSA_alg(unittest.TestCase):
         self.assertTrue(flag2)
 
     
-    # Testing the objective limit criterion
+    # Testing the objective limit criterion: we set a limit for chosen_function that must not be overcome.
 
     def test_objective_limit(self) :
         """
