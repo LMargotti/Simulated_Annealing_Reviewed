@@ -6,13 +6,19 @@ from user_function import chosen_function
 from algorithm import initialization, simulated_annealing
 from core_functions import avg_last_k_value, boltz_acceptance_prob, boltz_move, geom_cooling, objective_limit, tolerance
 
+rnd.seed(42) 
 
 class TestSA_alg(unittest.TestCase):
     """
     This file is intended to act as a test for the implemented algorithm and the core functions. 
     Tests are performed according to _unittest_ library documentation.
     
+    A random seed is fixed for reproducibility.
+    
+    List of tests:
     """
+    
+   
 
     # testing the initialization function: we impose conditions on T and s according to their definition
     def test_initialization(self):
