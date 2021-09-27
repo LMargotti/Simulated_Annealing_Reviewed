@@ -2,18 +2,33 @@ import unittest
 import numpy as np
 from numpy import random as rnd
 
+from user_function import chosen_function
+from algorithm import initialization, simulated_annealing
 from core_functions import avg_last_k_value, boltz_acceptance_prob, boltz_move, geom_cooling, objective_limit, tolerance
 
-"""
-This file is intended to act as a test for the implemented algorithm and the core functions. 
-Tests are performed according to _unittest_ library documentation.
 
-The following introduces a check on the proposed functions via analysis of an arbitrarily chosen well known 2-D function,
-in order for its behaviour to be easily controlled from scratch. 
-
-Energy function the tests are performed on: f(x)=x^2+y^2.
-"""
 class TestSA_alg(unittest.TestCase):
+    """
+    This file is intended to act as a test for the implemented algorithm and the core functions. 
+    Tests are performed according to _unittest_ library documentation.
+    
+    """
+
+    # testing the initialization function: we impose conditions on T and s according to their definition
+    def test_initialization(self):
+
+        s, temp = initialization(self.initial_temp, self.interval)
+
+        # Testing the temperature: input needs to be equal to the initial temperature the user sets.
+        self.assertEqual(temp, self.initial_temp)
+
+        # Testing the initial state: it must be confined in the given interval the algorithm operates into
+        self.assertLessEqual(s[0], self.interval[1])
+        self.assertLessEqual(s[1], self.interval[1])
+        self.assertGreaterEqual(s[0], self.interval[0])
+        self.assertGreaterEqual(s[1], self.interval[0])
+
+
     def energy(self, x):
 
         # Checking for input dimensionality: the system ensures the input is a 2-D function
