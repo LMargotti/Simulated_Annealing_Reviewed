@@ -6,7 +6,7 @@ from user_function import chosen_function
 from algorithm import initialization, simulated_annealing
 from core_functions import avg_last_k_value, boltz_acceptance_prob, boltz_move, geom_cooling, objective_limit, tolerance
 
-rnd.seed(42) 
+
 
 class TestSA_alg(unittest.TestCase):
     """
@@ -17,10 +17,20 @@ class TestSA_alg(unittest.TestCase):
 
     """
     
-   
+    def setUp(self):
 
-    # testing the initialization function: we impose conditions on T and s according to their definition
+        # Initialize unit test parameters
+        TestSA_alg.initial_temp = 100
+        TestSA_alg.interval = (-6, 6)
+        TestSA_alg.alpha = 0.95
+    
+    
+    
     def test_initialization(self):
+
+        """
+        Testing the initialization function: we impose conditions on T and s according to their definition
+        """
 
         s, temp = initialization(self.initial_temp, self.interval)
 
@@ -34,8 +44,15 @@ class TestSA_alg(unittest.TestCase):
         self.assertGreaterEqual(s[1], self.interval[0])
 
     
-    # Testing the Boltzmann move function
-    def test_move(self):
+    
+    def test_move(self):  
+        
+        """
+        Testing the Boltzmann move function
+        """
+        
+
+        rnd.seed(42) #reproducibility
 
         s = (rnd.uniform(self.interval[0], self.interval[1]), rnd.uniform(self.interval[0], self.interval[1])) # initial state
         new_s = boltz_move(s, self.initial_temp, self.interval) 
@@ -53,31 +70,46 @@ class TestSA_alg(unittest.TestCase):
 
     def test_energy(self):
 
-        # The values of energy for fixed seed need to be equal to the ones superimposed for a 2D function
+        rnd.seed(42) #reproducibility
+
+        """
+        The values of energy for fixed seed need to be equal to the ones superimposed for a 2D function
+        """
+        
+
         s = (rnd.uniform(self.interval[0], self.interval[1]), rnd.uniform(self.interval[0], self.interval[1])) # initial state
         e = chosen_function(s)
         
         self.assertEqual(e, s[0]**2+s[1]**2)
 
 
-    # Testing the cooling method: for a given temperature, the application of cooling
-    # implies a _lower_ temperature. Moreover, geom_cooling works multiplying T by a constant: this needs also to be tested.
+    
     def test_cooling(self):
+        
+        """
+        Testing the cooling method: for a given temperature, the application of cooling
+        implies a _lower_ temperature. Moreover, geom_cooling works multiplying T by a constant: this needs also to be tested.
+        """ 
 
         temp_0 = 100.
         temp_1 = geom_cooling(temp_0, self.alpha)
 
-        self.assertLess(temp_1, temp_0) 
+        self.assertLess(temp_1, temp_0) #Testing the definition of cooling
 
-        self.assertEqual(temp_1, temp_0 * self.alpha)
+        self.assertEqual(temp_1, temp_0 * self.alpha) #Testing the correctness of the employed cooling
 
-    # Testing the acceptance probability function: it needs to output a value between 0 and 1. 
-    # Also, its definition implies that for two identical energies it returns 1.
+        self.assertGreater(temp_1,0) #Temperature must _always_ be positive
+
+    
 
     def test_acceptance_prob(self):
+
         """
-        Testing the acceptance probability function function.
+        Testing the acceptance probability function: it needs to output a value between 0 and 1. 
+        Also, its definition implies that for two identical energies it returns 1.
         """ 
+
+        rnd.seed(42) #reproducibility
 
         e1 = rnd.random()
         e2 = rnd.random()
@@ -96,10 +128,14 @@ class TestSA_alg(unittest.TestCase):
         self.assertEqual(acc_prob, 1.)
 
     
-    # Testing the tolerance criterion. Two scenarios are pictured depending on the definition of the tolerance iter.
+   
 
     def test_tolerance_criterion(self) :
-    
+
+        """
+        Testing the tolerance criterion. Two scenarios are pictured depending on the definition of the tolerance iter.
+        """
+
         energies = [1,2,3,4,5,6]
         flag1 = tolerance(energies, tolerance = 10, tolerance_iter = len(energies)+1)
         flag2 = tolerance(energies, tolerance = 10, tolerance_iter = len(energies)-1)
@@ -108,12 +144,16 @@ class TestSA_alg(unittest.TestCase):
         self.assertTrue(flag2)
 
     
-    # Testing the objective limit criterion: we set a limit for chosen_function that must not be overcome.
+    
 
     def test_objective_limit(self) :
+
         """
-        Testing the onjective limit criterion.
-        """ 
+        Testing the objective limit criterion: we set a limit for chosen_function that must not be overcome.
+        """
+
+        rnd.seed(42) #reproducibility
+
         s = (rnd.uniform(self.interval[0], self.interval[1]), rnd.uniform(self.interval[0], self.interval[1]))
         e =  chosen_function(s)
         flag = objective_limit(energy = e, limit = -1)
@@ -121,12 +161,16 @@ class TestSA_alg(unittest.TestCase):
         self.assertFalse(flag)
 
 
-    # ALGORITHM: test is run on chosen_function: the algorithm is correct if it gives a minimum in [0,0] for that specific function
+    
 
     def test_sa(self) :
+
         """
-        Testing SA algorithm.
-        """ 
+        Test on ALGORITHM: test is run on chosen_function: the algorithm is correct if it gives a minimum in [0,0] for that specific function
+        """
+
+       
+        
         states, energies, temp, k, _exit, reann = simulated_annealing(
                                                 cooling = geom_cooling,
                                                 energy = chosen_function,
@@ -146,16 +190,8 @@ class TestSA_alg(unittest.TestCase):
 
     
    
-
-
     
-
 if __name__ == '__main__':
-
-    # Initialize unit test parameters
-    TestSA_alg.initial_temp = 100
-    TestSA_alg.interval = (-6, 6)
-    TestSA_alg.alpha = 0.95
 
 
     unittest.main()
